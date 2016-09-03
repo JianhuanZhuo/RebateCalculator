@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RebateCalculator</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="str_total_amount">销售金额：</string>
+    <string name="str_rate_rebate">提成利率：</string>
+    <string name="str_rate_amount">提成金额：</string>
+    <string name="hint_item_name">名称：</string>
+    <string name="hint_item_note">备注：</string>
+    <string name="hint_item_price">单价：</string>
+    <string name="hint_item_add">+</string>
+    <string name="hint_item_sub">-</string>
+    <string name="hint_item_price_unit">￥</string>
+    <string name="hint_order_total">总价：</string>
+    <string name="hint_order_total_sub">共计：</string>
+    <string name="hint_order_remainder">剩余：</string>
+    <string name="str_unit_yuan">（元）</string>
+    <string name="str_no_picture">暂时无图片</string>
+    <string name="btn_iten_remainder">还可添加：</string>
+    <string name="btn_iten_remainder_value">可添加数量</string>
+    <string name="btn_rebate_calculate">计算提成</string>
+    <string name="btn_rebate_exchange">兑换货品</string>
+    <string name="btn_edit">编辑</string>
+    <string name="str_image_contents">图片</string>
+    <string name="content_item_name">货品名称</string>
+    <string name="content_item_note">货品的相关备注</string>
+    <string name="content_item_price">货品价格信息</string>
+    <string name="title_btn_return">返回</string>
+    <string name="title_btn_delete">删除</string>
+    <string name="title_btn_confirm">确定</string>
+    <string name="title_btn_reset">重置</string>
+    <string name="title_btn_complete">完成</string>
+    <string name="title_btn_add">添加</string>
+
+</resources>
