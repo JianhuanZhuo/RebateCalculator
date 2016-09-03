@@ -15,6 +15,6 @@ public class Item implements Serializable {
 	private static final long serialVersionUID = -1609425559654430071L;
 	String name;
 	String note;
-	float price;
+	double price;
 	String picture;
 }

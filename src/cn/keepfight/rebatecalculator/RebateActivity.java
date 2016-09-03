@@ -40,13 +40,14 @@ public class RebateActivity extends Activity {
 					public void onClick(View v) {
 
 						try {
-							float rebateNum = Float.valueOf(amountRebate
+							double rebateNum = Double.valueOf(amountRebate
 									.getText().toString());
 							if (rebateNum < 0.1) {
 								throw new Exception();
 							}
 							Intent intent = new Intent(RebateActivity.this,
 									OrderActivity.class);
+							intent.putExtra("rebate", rebateNum);
 							RebateActivity.this.startActivity(intent);
 						} catch (Exception e) {
 							new AlertDialog.Builder(RebateActivity.this)
@@ -62,9 +63,9 @@ public class RebateActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						try {
-							float amount = Float.valueOf(totalAmount.getText()
+							double amount = Double.valueOf(totalAmount.getText()
 									.toString());
-							float rate = Float.valueOf(rebateRate.getText()
+							double rate = Double.valueOf(rebateRate.getText()
 									.toString());
 							if (amount < 0.1) {
 								throw new Exception();

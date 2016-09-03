@@ -25,7 +25,6 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Log.i("xx", "initUI ok");
 				Intent intent = new Intent(MainActivity.this, ManageItemActivity.class);
 				MainActivity.this.startActivity(intent);
 			}
@@ -34,8 +33,15 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Log.i("xx", "initUI ok");
 				Intent intent = new Intent(MainActivity.this, RebateActivity.class);
+				MainActivity.this.startActivity(intent);
+			}
+		});
+		((Button)findViewById(R.id.button3)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, OrderActivity.class);
 				MainActivity.this.startActivity(intent);
 			}
 		});

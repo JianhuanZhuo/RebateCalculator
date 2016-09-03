@@ -1,32 +1,74 @@
 package cn.keepfight.rebatecalculator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class OrderActivity extends Activity {
 
-	ListView listView;
+	LinearLayout listItemLayout;
 	TextView textRemainder;
 	TextView textTotal;
+	double rebateNum = -1;
+	EditText inputRebate;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order);
-		initUI();
+		initRebate();
+	}
+
+	private void initRebate() {
+		try {
+			rebateNum = getIntent().getDoubleExtra("rebate", -1);
+		} catch (Exception e) {
+		}
+		if (rebateNum < 0) {
+			inputRebate = new EditText(this);
+			new AlertDialog.Builder(this)
+					.setTitle("请输入提成总额")
+					.setPositiveButton("确定",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									try {
+										rebateNum = Double.valueOf(inputRebate
+												.getText().toString());
+									} catch (Exception e) {
+										finish();
+									}
+									if (rebateNum < -1) {
+										finish();
+									}
+									((TextView) findViewById(R.id.textRebateAmount))
+											.setText("" + rebateNum);
+									initUI();
+								}
+							})
+					.setView(inputRebate)
+					.setNegativeButton("取消",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									finish();
+								}
+							}).show();
+		} else {
+			((TextView) findViewById(R.id.textRebateAmount)).setText(""
+					+ rebateNum);
+			initUI();
+		}
+
 	}
 
 	/**
@@ -34,12 +76,10 @@ public class OrderActivity extends Activity {
 	 */
 	void initUI() {
 		// 找组件
-		listView = (ListView) findViewById(R.id.listItem);
+		listItemLayout = (LinearLayout) findViewById(R.id.listItem);
 		textRemainder = (TextView) findViewById(R.id.textRemainder);
 		textTotal = (TextView) findViewById(R.id.textTotal);
 
-		//
-		
 		findViewById(R.id.btnReturn).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -51,50 +91,28 @@ public class OrderActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				//TODO 充值
+				// TODO 重置
 			}
 		});
-		
+		findViewById(R.id.btnComplete).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO 完成
+					}
+				});
+
+		// 新建数量
+		WidgetOrderItem orderItem = (WidgetOrderItem) getLayoutInflater()
+				.inflate(R.layout.item_with_order, listItemLayout, false);
+		listItemLayout.addView(orderItem);
+
+		// 刷新内容
 		refleshList();
 	}
-	
-
 
 	private void refleshList() {
-		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-		ArrayList<Item> itemList = ItemManager.getInstance().getList();
-		for (int i = 0; i < itemList.size(); i++) {
-			Map<String, Object> itemMap = new HashMap<String, Object>();
-			Item item = itemList.get(i);
-			itemMap.put("index", i);
-			itemMap.put("name", "" + item.name);
-			itemMap.put("note", "" + item.note);
-			itemMap.put("price", "" + item.price);
-			// TODO 处理图片的
-			data.add(itemMap);
-		}
-
-		SimpleAdapter simpleAdapter = new SimpleAdapter(this, data,
-				R.layout.item_xx, new String[] { "index", "name", "note",
-						"price" }, new int[] { R.id.textItemIndex,
-						R.id.textItemName, R.id.textItemNote,
-						R.id.textItemPrice });
-		listView.setAdapter(simpleAdapter);
-
-		
-		Log.i("focus", "listView.getChildCount()  "+listView.getChildCount());
-		for (int i = 0; i < listView.getChildCount(); i++) {
-			View view = listView.getChildAt(i);
-			Log.i("focus", "class  "+view.getClass().getName());
-			view.findViewById(R.id.inputNumSub).setOnFocusChangeListener(new OnFocusChangeListener() {
-				
-				@Override
-				public void onFocusChange(View v, boolean hasFocus) {
-					if (!hasFocus) {
-						Log.i("focus", "en j"+hasFocus);
-					}
-				}
-			});
-		}
+		// 刷新内容
 	}
 }

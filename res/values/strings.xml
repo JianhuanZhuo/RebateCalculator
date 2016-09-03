@@ -14,6 +14,7 @@
     <string name="hint_item_price_unit">￥</string>
     <string name="hint_order_total">总价：</string>
     <string name="hint_order_total_sub">共计：</string>
+    <string name="hint_order_total_add">再拿：</string>
     <string name="hint_order_remainder">剩余：</string>
     <string name="str_unit_yuan">（元）</string>
     <string name="str_no_picture">暂时无图片</string>
@@ -31,6 +32,7 @@
     <string name="title_btn_confirm">确定</string>
     <string name="title_btn_reset">重置</string>
     <string name="title_btn_complete">完成</string>
+    <string name="title_str_rebate">提成：</string>
     <string name="title_btn_add">添加</string>
 
 </resources>

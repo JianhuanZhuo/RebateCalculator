@@ -33,4 +33,13 @@
         android:layout_toRightOf="@+id/textView1"
         android:text="测试计算" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/button2"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="30dp"
+        android:text="测试订货" />
+
 </RelativeLayout>

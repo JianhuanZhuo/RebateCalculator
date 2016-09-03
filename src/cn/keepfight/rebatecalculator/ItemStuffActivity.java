@@ -55,7 +55,7 @@ public class ItemStuffActivity extends Activity {
 					public void onClick(View v) {
 						currentItem.name = itemName.getText().toString();
 						currentItem.note = itemNote.getText().toString();
-						currentItem.price = Float.valueOf(itemPrice.getText()
+						currentItem.price = Double.valueOf(itemPrice.getText()
 								.toString());
 						// TODO 还要加图片的处理
 						if (getIntent().getBooleanExtra("new", true)) {
