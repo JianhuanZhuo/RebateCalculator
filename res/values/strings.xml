@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">RebateCalculator</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="version">Beta 1.0</string>
+    <string name="APP">APP</string>
     <string name="str_total_amount">销售金额：</string>
     <string name="str_rate_rebate">提成利率：</string>
     <string name="str_rate_amount">提成金额：</string>
@@ -18,6 +19,9 @@
     <string name="hint_order_remainder">剩余：</string>
     <string name="str_unit_yuan">（元）</string>
     <string name="str_no_picture">暂时无图片</string>
+    <string name="btn_startup_manage">管理货物条项</string>
+    <string name="btn_startup_rebate">计算提成金额</string>
+    <string name="btn_startup_order">提成兑换货物</string>
     <string name="btn_iten_remainder">还可添加：</string>
     <string name="btn_iten_remainder_value">可添加数量</string>
     <string name="btn_rebate_calculate">计算提成</string>

@@ -1,5 +1,10 @@
 package cn.keepfight.rebatecalculator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,13 +15,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class OrderActivity extends Activity {
+public class OrderActivity extends Activity implements OrderDeliver {
 
 	LinearLayout listItemLayout;
 	TextView textRemainder;
 	TextView textTotal;
 	double rebateNum = -1;
 	EditText inputRebate;
+
+	ArrayList<OrderDelivee> delivees = new ArrayList<OrderDelivee>();
+	Map<OrderDelivee, Double> consumption = new HashMap<OrderDelivee, Double>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +99,9 @@ public class OrderActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO 重置
+				for (OrderDelivee delivee : consumption.keySet()) {
+					delivee.reset();
+				}
 			}
 		});
 		findViewById(R.id.btnComplete).setOnClickListener(
@@ -99,20 +109,87 @@ public class OrderActivity extends Activity {
 
 					@Override
 					public void onClick(View v) {
-						// TODO 完成
+						finish();
 					}
 				});
 
 		// 新建数量
-		WidgetOrderItem orderItem = (WidgetOrderItem) getLayoutInflater()
-				.inflate(R.layout.item_with_order, listItemLayout, false);
-		listItemLayout.addView(orderItem);
+		for (Item item : ItemManager.getInstance().getList()) {
+			WidgetOrderItem orderItem = (WidgetOrderItem) getLayoutInflater()
+					.inflate(R.layout.item_with_order, listItemLayout, false);
+			listItemLayout.addView(orderItem);
+			orderItem.setDelive(item, this);
+		}
 
 		// 刷新内容
 		refleshList();
+		textTotal.setText("0");
+		textRemainder.setText(""+getRebateRemainder());
 	}
 
 	private void refleshList() {
 		// 刷新内容
 	}
+
+	@Override
+	public void regitsterDelivee(OrderDelivee delivee) {
+		delivees.add(delivee);
+		consumption.put(delivee, Double.valueOf(0));
+		delivee.remainderNotice(getRebateRemainder());
+	}
+
+	@Override
+	public double getRebateTotal() {
+		return rebateNum;
+	}
+
+	@Override
+	public double getRebateRemainder() {
+		double rebateUsed = 0;
+		for (Double cons : consumption.values()) {
+			rebateUsed += cons;
+		}
+		return rebateNum - rebateUsed;
+	}
+
+	@Override
+	public void updateRebate() {
+	}
+
+	@Override
+	public synchronized int applyRebateSub(OrderDelivee delivee, int subNum,
+			double price) {
+		double rebateUsed = 0;
+		for (Entry<OrderDelivee, Double> cons : consumption.entrySet()) {
+			if (cons.getKey() == delivee) {
+				continue;
+			}
+			rebateUsed += cons.getValue();
+		}
+		double remainder = rebateNum - rebateUsed;
+
+		int res = -1;
+		
+		if (remainder < price * subNum) {
+			res = (int) (remainder / price);
+			subNum = res;
+		}
+		consumption.put(delivee, Double.valueOf(price * subNum));
+		noticeRemainder();
+		
+		//更新总价与剩余
+		textTotal.setText(""+(getRebateTotal()-getRebateRemainder()));
+		textRemainder.setText(""+getRebateRemainder());
+		
+		return res;
+	}
+
+	private void noticeRemainder() {
+		for (OrderDelivee delivee : consumption.keySet()) {
+			delivee.remainderNotice(getRebateRemainder());
+		}
+	}
+	
+	
+
 }

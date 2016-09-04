@@ -89,6 +89,9 @@ public class ManageItemActivity extends Activity {
 						R.id.textItemName, R.id.textItemNote,
 						R.id.textItemPrice });
 		listView.setAdapter(simpleAdapter);
+		
+		//XXX 放在这里不是一个好的选择
+		SDCardAccess.saveManager();
 	}
 
 	@Override
