@@ -91,7 +91,7 @@ public class ManageItemActivity extends Activity {
 		listView.setAdapter(simpleAdapter);
 		
 		//XXX 放在这里不是一个好的选择
-		SDCardAccess.saveManager();
+		SDCardAccess.saveManager(this);
 	}
 
 	@Override

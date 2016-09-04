@@ -8,6 +8,8 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="16" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -16,24 +18,20 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ManageItemActivity">
+        <activity android:name=".ManageItemActivity" >
         </activity>
-        <activity
-            android:name=".ItemStuffActivity">
+        <activity android:name=".ItemStuffActivity" >
         </activity>
-        <activity
-            android:name=".RebateActivity">
+        <activity android:name=".RebateActivity" >
         </activity>
-        <activity
-            android:name=".OrderActivity">
+        <activity android:name=".OrderActivity" >
         </activity>
     </application>
 
