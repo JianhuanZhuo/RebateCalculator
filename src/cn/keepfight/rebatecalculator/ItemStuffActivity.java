@@ -12,6 +12,7 @@ public class ItemStuffActivity extends Activity {
 
 	ImageView itemImage;
 	EditText itemName;
+	EditText itemCluster;
 	EditText itemNote;
 	EditText itemPrice;
 	Item currentItem;
@@ -28,6 +29,7 @@ public class ItemStuffActivity extends Activity {
 	 */
 	void initUI() {
 		itemName = (EditText) findViewById(R.id.textItemName);
+		itemCluster = (EditText) findViewById(R.id.textItemCluster);
 		itemNote = (EditText) findViewById(R.id.textItemNote);
 		itemPrice = (EditText) findViewById(R.id.textItemPrice);
 		((Button) findViewById(R.id.btnReturn))
@@ -53,10 +55,14 @@ public class ItemStuffActivity extends Activity {
 
 					@Override
 					public void onClick(View v) {
+						// 完成打包数据
 						currentItem.name = itemName.getText().toString();
+						currentItem.cluster = Integer.valueOf(itemCluster
+								.getText().toString());
 						currentItem.note = itemNote.getText().toString();
-						currentItem.price = Double.valueOf(itemPrice.getText()
+						currentItem.price = PreciseKit.dou2(itemPrice.getText()
 								.toString());
+						currentItem.priceCluster=PreciseKit.dou2(currentItem.price*currentItem.cluster);
 						// TODO 还要加图片的处理
 						if (getIntent().getBooleanExtra("new", true)) {
 							ItemManager.getInstance().add(currentItem);
@@ -70,12 +76,14 @@ public class ItemStuffActivity extends Activity {
 			currentItem = (Item) ItemManager.getInstance().get(
 					getIntent().getIntExtra("index", -1));
 			itemName.setText(currentItem.name);
+			itemCluster.setText("" + currentItem.cluster);
 			itemNote.setText(currentItem.note);
 			itemPrice.setText("" + currentItem.price);
 			// TODO 添加对图片的
 		} else {
 			currentItem = new Item();
 			itemPrice.setText("0.0");
+			itemCluster.setText("0");
 		}
 	}
 }

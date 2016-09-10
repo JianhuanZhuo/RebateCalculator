@@ -35,7 +35,8 @@ public class OrderActivity extends Activity implements OrderDeliver {
 
 	private void initRebate() {
 		try {
-			rebateNum = getIntent().getDoubleExtra("rebate", -1);
+			rebateNum = PreciseKit.dou2(getIntent()
+					.getDoubleExtra("rebate", -1));
 		} catch (Exception e) {
 		}
 		if (rebateNum < 0) {
@@ -49,7 +50,7 @@ public class OrderActivity extends Activity implements OrderDeliver {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									try {
-										rebateNum = Double.valueOf(inputRebate
+										rebateNum = PreciseKit.dou2(inputRebate
 												.getText().toString());
 									} catch (Exception e) {
 										finish();
@@ -124,7 +125,7 @@ public class OrderActivity extends Activity implements OrderDeliver {
 		// 刷新内容
 		refleshList();
 		textTotal.setText("0");
-		textRemainder.setText(""+getRebateRemainder());
+		textRemainder.setText("" + getRebateRemainder());
 	}
 
 	private void refleshList() {
@@ -169,18 +170,18 @@ public class OrderActivity extends Activity implements OrderDeliver {
 		double remainder = rebateNum - rebateUsed;
 
 		int res = -1;
-		
+
 		if (remainder < price * subNum) {
 			res = (int) (remainder / price);
 			subNum = res;
 		}
 		consumption.put(delivee, Double.valueOf(price * subNum));
 		noticeRemainder();
-		
-		//更新总价与剩余
-		textTotal.setText(""+(getRebateTotal()-getRebateRemainder()));
-		textRemainder.setText(""+getRebateRemainder());
-		
+
+		// 更新总价与剩余
+		textTotal.setText("" + (getRebateTotal() - getRebateRemainder()));
+		textRemainder.setText("" + getRebateRemainder());
+
 		return res;
 	}
 
@@ -189,7 +190,5 @@ public class OrderActivity extends Activity implements OrderDeliver {
 			delivee.remainderNotice(getRebateRemainder());
 		}
 	}
-	
-	
 
 }

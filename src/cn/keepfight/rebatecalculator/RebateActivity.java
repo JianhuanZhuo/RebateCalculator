@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -63,8 +65,8 @@ public class RebateActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						try {
-							double amount = Double.valueOf(totalAmount.getText()
-									.toString());
+							double amount = Double.valueOf(totalAmount
+									.getText().toString());
 							double rate = Double.valueOf(rebateRate.getText()
 									.toString());
 							if (amount < 0.1) {
@@ -83,6 +85,27 @@ public class RebateActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				finish();
+			}
+		});
+		rebateRate.setText(PreciseKit.str2(ItemManager.getInstance()
+				.getRebateRate()));
+		rebateRate.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				ItemManager.getInstance().setRebateRate(
+						PreciseKit.dou2(rebateRate.getText().toString()));
+				SDCardAccess.saveManager();
 			}
 		});
 	}

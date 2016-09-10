@@ -77,21 +77,27 @@ public class ManageItemActivity extends Activity {
 			Item item = itemList.get(i);
 			itemMap.put("index", i);
 			itemMap.put("name", "" + item.name);
+			itemMap.put("cluster", "" + item.cluster);
 			itemMap.put("note", "" + item.note);
 			itemMap.put("price", "" + item.price);
+			itemMap.put(
+					"priceRelative",
+					PreciseKit.str2(item.price
+							* ItemManager.getInstance().getRebateRelative()));
 			// TODO 处理图片的
 			data.add(itemMap);
 		}
 
 		SimpleAdapter simpleAdapter = new SimpleAdapter(this, data,
-				R.layout.item_detail, new String[] { "index", "name", "note",
-						"price" }, new int[] { R.id.textItemIndex,
-						R.id.textItemName, R.id.textItemNote,
-						R.id.textItemPrice });
+				R.layout.item_detail, new String[] { "index", "name",
+						"cluster", "note", "price", "priceRelative" },
+				new int[] { R.id.textItemIndex, R.id.textItemName,
+						R.id.textItemCluster, R.id.textItemNote,
+						R.id.textItemPrice, R.id.textItemPriceRelative });
 		listView.setAdapter(simpleAdapter);
-		
-		//XXX 放在这里不是一个好的选择
-		SDCardAccess.saveManager(this);
+
+		// XXX 放在这里不是一个好的选择
+		SDCardAccess.saveManager();
 	}
 
 	@Override

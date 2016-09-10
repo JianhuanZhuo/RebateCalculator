@@ -52,6 +52,21 @@
 
         <TextView
             style="@style/HintInputStyle"
+            android:text="@string/hint_item_cluster" />
+
+        <EditText
+            android:id="@+id/textItemCluster"
+            style="@style/EditTextStyle"
+            android:inputType="number" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/HintInputStyle"
             android:text="@string/hint_item_note" />
 
         <EditText

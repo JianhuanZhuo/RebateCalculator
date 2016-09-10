@@ -23,7 +23,6 @@ public class WidgetOrderItem extends LinearLayout implements OrderDelivee {
 		if (isInEditMode()) {
 			return;
 		}
-
 	}
 
 	public void setDelive(Item item, OrderDeliver deliver) {
@@ -37,8 +36,13 @@ public class WidgetOrderItem extends LinearLayout implements OrderDelivee {
 	private void initUI() {
 		// 货品信息格式化
 		((TextView) findViewById(R.id.textItemName)).setText(item.name);
+		((TextView) findViewById(R.id.textItemCluster)).setText(""+item.cluster);
 		((TextView) findViewById(R.id.textItemNote)).setText(item.note);
-		((TextView) findViewById(R.id.textItemPrice)).setText("" + item.price);
+		((TextView) findViewById(R.id.textItemPrice)).setText(PreciseKit
+				.str2(item.price));
+		((TextView) findViewById(R.id.textItemPriceRelative))
+				.setText(PreciseKit.str2(item.price
+						* ItemManager.getInstance().getRebateRelative()));
 		// TODO 需要添加对图片的支持
 
 		// 输入格式化
@@ -64,14 +68,15 @@ public class WidgetOrderItem extends LinearLayout implements OrderDelivee {
 					numSub = Integer.valueOf(inputNumSub.getText().toString());
 				} catch (Exception e) {
 				}
-				int applyRes = deliver.applyRebateSub(WidgetOrderItem.this, numSub, item.price);
+				int applyRes = deliver.applyRebateSub(WidgetOrderItem.this,
+						numSub, item.priceCluster);
 				if (applyRes != -1) {
 					inputNumSub.setText("" + applyRes);
 					numSub = applyRes;
 				}
-				
+
 				textTotalSub.setText(new DecimalFormat("#.00").format(numSub
-						* item.price));
+						* item.priceCluster));
 			}
 		});
 
@@ -82,7 +87,7 @@ public class WidgetOrderItem extends LinearLayout implements OrderDelivee {
 
 	@Override
 	public void remainderNotice(double remainder) {
-		textTotalAdd.setText(""+(int)(remainder/item.price));
+		textTotalAdd.setText("" + (int) (remainder / item.priceCluster));
 	}
 
 	@Override

@@ -21,6 +21,7 @@ public class ItemManager implements Serializable{
 	}
 
 	ArrayList<Item> itemList = new ArrayList<Item>();
+	double rebateRate = 0;
 
 	public void add(Item item) {
 		itemList.add(item);
@@ -44,5 +45,17 @@ public class ItemManager implements Serializable{
 
 	public ArrayList<Item> getList() {
 		return itemList;
+	}
+	
+	public double getRebateRate() {
+		return rebateRate;
+	}
+	
+	public double getRebateRelative() {
+		return PreciseKit.dou2(1-rebateRate);
+	}
+	
+	public void setRebateRate(double rebateRate) {
+		this.rebateRate = rebateRate;
 	}
 }

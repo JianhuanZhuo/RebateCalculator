@@ -10,7 +10,7 @@ import android.content.Context;
 
 public class SDCardAccess {
 
-	public static boolean saveManager(Context context) {
+	public static boolean saveManager() {
 
 		ByteArrayOutputStream baos = null;
 		byte[] bytes = null;
@@ -23,7 +23,7 @@ public class SDCardAccess {
 			e.printStackTrace();
 		}
 		return SDCardHelper.saveFileToPrivateCacheDir(bytes, "manager.ca",
-				context);
+				MyApplication.getContext());
 	}
 
 	public static void getManager(Context context) {
